@@ -449,11 +449,11 @@
             </property>
             <property name="font">
              <font>
-              <family>TeX Gyre Chorus</family>
+              <family>Forte</family>
               <pointsize>35</pointsize>
-              <weight>75</weight>
-              <italic>true</italic>
-              <bold>true</bold>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
              </font>
             </property>
             <property name="text">
@@ -959,11 +959,11 @@
             </property>
             <property name="font">
              <font>
-              <family>TeX Gyre Chorus</family>
+              <family>Forte</family>
               <pointsize>35</pointsize>
-              <weight>75</weight>
-              <italic>true</italic>
-              <bold>true</bold>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
              </font>
             </property>
             <property name="text">
@@ -1426,7 +1426,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="QLabel" name="label_3">
+           <widget class="QLabel" name="InputImage1">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -1469,11 +1469,11 @@
             </property>
             <property name="font">
              <font>
-              <family>TeX Gyre Chorus</family>
+              <family>Forte</family>
               <pointsize>35</pointsize>
-              <weight>75</weight>
-              <italic>true</italic>
-              <bold>true</bold>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
              </font>
             </property>
             <property name="layoutDirection">
@@ -1494,11 +1494,11 @@
             </property>
             <property name="font">
              <font>
-              <family>TeX Gyre Chorus</family>
+              <family>Forte</family>
               <pointsize>35</pointsize>
-              <weight>75</weight>
-              <italic>true</italic>
-              <bold>true</bold>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
              </font>
             </property>
             <property name="text">
@@ -1548,11 +1548,11 @@
            <widget class="QLabel" name="label_2">
             <property name="font">
              <font>
-              <family>TeX Gyre Chorus</family>
+              <family>Forte</family>
               <pointsize>25</pointsize>
-              <weight>75</weight>
-              <italic>true</italic>
-              <bold>true</bold>
+              <weight>50</weight>
+              <italic>false</italic>
+              <bold>false</bold>
              </font>
             </property>
             <property name="text">
@@ -2017,11 +2017,11 @@
              <widget class="QLabel" name="label_4">
               <property name="font">
                <font>
-                <family>TeX Gyre Chorus</family>
+                <family>Forte</family>
                 <pointsize>25</pointsize>
-                <weight>75</weight>
-                <italic>true</italic>
-                <bold>true</bold>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
                </font>
               </property>
               <property name="text">
@@ -2975,11 +2975,11 @@
              <widget class="QLabel" name="label_5">
               <property name="font">
                <font>
-                <family>TeX Gyre Chorus</family>
+                <family>Forte</family>
                 <pointsize>25</pointsize>
-                <weight>75</weight>
-                <italic>true</italic>
-                <bold>true</bold>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
                </font>
               </property>
               <property name="text">
@@ -3963,7 +3963,7 @@
      <x>0</x>
      <y>0</y>
      <width>1209</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
