@@ -21,15 +21,15 @@ class ImageModel():
         ###
         self.imgByte = cv.imread(imgPath,cv.IMREAD_GRAYSCALE)
         self.dft = np.fft.fft(self.imgByte) 
-        self.real = self.dft.real.astype(int)
-        self.imaginary = self.dft.imag.astype(int)
-        self.magnitude = np.abs(self.dft)
-        self.phase = np.angle(self.dft)
+        self.real = self.dft.real
+        self.imaginary = self.dft.imag
+        self.magnitude , self.phase = cv.cartToPolar(self.real,self.imaginary,angleInDegrees = True)
         self.uniMagnitude = np.where(self.magnitude>0.5,1,1)
         self.uniPhase = self.phase*0
+        self.uniMag = False
+        self.uniPhase = False
 
-
-    def mix(self, imageToBeMixed: 'ImageModel', magnitudeOrRealRatio: float, phaesOrImaginaryRatio: float, mode: 'Modes',uniMag: bool,uniPhase:bool ) -> np.ndarray:
+    def mix(self, imageToBeMixed: 'ImageModel', magnitudeOrRealRatio: float, phaesOrImaginaryRatio: float, mode: 'Modes') -> np.ndarray:
         """
         a function that takes ImageModel object mag ratio, phase ration 
         """
@@ -37,15 +37,15 @@ class ImageModel():
         # implement this function
         ###
         if mode.value == 0:
-            if (uniMag&uniPhase):
+            if (self.uniMag&self.uniPhase):
                 mix = (self.uniMagnitude*magnitudeOrRealRatio + imageToBeMixed.magnitude*(1-magnitudeOrRealRatio))*np.exp(self.phase*(1-phaesOrImaginaryRatio)+imageToBeMixed.uniPhase*phaesOrImaginaryRatio)
-            elif (uniMag):
+            elif (self.uniMag):
                 mix = (self.uniMagnitude*magnitudeOrRealRatio + imageToBeMixed.magnitude*(1-magnitudeOrRealRatio))*np.exp(self.phase*(1-phaesOrImaginaryRatio)+imageToBeMixed.phase*phaesOrImaginaryRatio)
-            elif (uniPhase):
+            elif (self.uniPhase):
                 mix = (self.magnitude*magnitudeOrRealRatio + imageToBeMixed.magnitude*(1-magnitudeOrRealRatio))*np.exp(self.phase*(1-phaesOrImaginaryRatio)+imageToBeMixed.uniPhase*phaesOrImaginaryRatio)
             else:
                 mix = (self.magnitude*magnitudeOrRealRatio + imageToBeMixed.magnitude*(1-magnitudeOrRealRatio))*np.exp(self.phase*(1-phaesOrImaginaryRatio)+imageToBeMixed.phase*phaesOrImaginaryRatio)
         elif mode.value == 1:
-            mix = complex(self.real*magnitudeOrRealRatio+imageToBeMixed.real*(1-magnitudeOrRealRatio),self.imaginary*(1-phaesOrImaginaryRatio)+imageToBeMixed.imaginary*phaesOrImaginaryRatio)
+            mix =(self.real*magnitudeOrRealRatio+imageToBeMixed.real*(1-magnitudeOrRealRatio))+ 1j*(self.imaginary*(1-phaesOrImaginaryRatio)+imageToBeMixed.imaginary*phaesOrImaginaryRatio)
         invImg = np.real(np.fft.ifft(mix))
         return invImg

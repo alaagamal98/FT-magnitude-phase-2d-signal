@@ -19,6 +19,6 @@ image2Path : str = "results/test2.jpg"
 # as you have noticed, python is not a static typed language, so many errors can happen by passing a different type than the expected one to a function
 # type annotations can help you not to do this terrible mistake
 
-test = Task3Test(image2Path, image2Path, ImageModel)
+test = Task3Test(image1Path, image2Path, ImageModel)
 test.testMagAndPhaseMode(0.7, 0.3)
 test.testRealAndImagMode(0.7, 0.3)

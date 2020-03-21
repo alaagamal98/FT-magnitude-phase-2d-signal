@@ -75,12 +75,14 @@ class MyWindow(QtWidgets.QMainWindow):
             uniPhase = True if (compIndex[0] == 5 or compIndex[1] == 5) else False
             for i in range(len(imageIndex)):
                 percentage[i].setText(str(mixingRatio[i]*100)+"%")
-                modeIndex = 0 if compIndex[imageIndex[i]]== 0 or 1 or 4 or 5 else 1
-                if compIndex[imageIndex[i]] == 0 or 2 or 4:
-                    self.outputData[outputIndex]= self.inputData[imageIndex[i]].mix(self.inputData[abs(imageIndex[i]-1)],mixingRatio[imageIndex[i]],mixingRatio[abs(imageIndex[i]-1)],Modes(modeIndex),uniMag,uniPhase)
+                modeIndex = 0 if compIndex[imageIndex[i]] in (0,1,4,5) else 1                    
+                if compIndex[imageIndex[i]] in(0,2,4):
+                    self.inputData[imageIndex[i]].uniMag = True if compIndex[imageIndex[i]] == 4 else False
+                    self.outputData[outputIndex]= self.inputData[imageIndex[i]].mix(self.inputData[abs(imageIndex[i]-1)],mixingRatio[imageIndex[i]],mixingRatio[abs(imageIndex[i]-1)],Modes(modeIndex))
                     self.ChangeCombobox(compIndex[imageIndex[i]],imageIndex[i])
                 else:
-                    self.outputData[outputIndex]= self.inputData[abs(imageIndex[i]-1)].mix(self.inputData[imageIndex[i]],mixingRatio[abs(imageIndex[i]-1)],mixingRatio[imageIndex[i]],Modes(modeIndex),uniMag,uniPhase)
+                    self.inputData[imageIndex[i]].uniPhase = True if compIndex[imageIndex[i]]==5 else False
+                    self.outputData[outputIndex] = self.inputData[abs(imageIndex[i]-1)].mix(self.inputData[imageIndex[i]],mixingRatio[abs(imageIndex[i]-1)],mixingRatio[imageIndex[i]],Modes(modeIndex))
                     self.ChangeCombobox(compIndex[imageIndex[i]],imageIndex[i])
             self.showImage(self.outputData[outputIndex],self.OutputImages[outputIndex],outputIndex)
 
