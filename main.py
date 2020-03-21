@@ -73,16 +73,17 @@ class MyWindow(QtWidgets.QMainWindow):
             compIndex = [self.ui.ComponentOutput1.currentIndex(),self.ui.ComponentOutput2.currentIndex()]
             for i in range(len(imageIndex)):
                 percentage[i].setText(str(mixingRatio[i]*100)+"%")
-                modeIndex = 0 if compIndex[imageIndex[i]] in (0,1,4,5) else 1                    
-                if compIndex[imageIndex[i]] in(0,2,4):
-                    self.inputData[imageIndex[i]].uniMag = True if compIndex[imageIndex[i]] == 4 else False
+                modeIndex = 0 if compIndex[i] in (0,1,4,5) else 1                    
+                if compIndex[i] in(0,2,4):
+                    self.inputData[imageIndex[i]].uniMag = True if compIndex[i] == 4 else False
                     self.outputData[outputIndex]= self.inputData[imageIndex[i]].mix(self.inputData[abs(imageIndex[i]-1)],mixingRatio[imageIndex[i]],mixingRatio[abs(imageIndex[i]-1)],Modes(modeIndex))
                     self.ChangeCombobox(compIndex[0])
                 else:
-                    self.inputData[imageIndex[i]].uniPhase = True if compIndex[imageIndex[i]]==5 else False
+                    self.inputData[imageIndex[i]].uniPhase = True if compIndex[i]==5 else False
                     self.outputData[outputIndex] = self.inputData[abs(imageIndex[i]-1)].mix(self.inputData[imageIndex[i]],mixingRatio[abs(imageIndex[i]-1)],mixingRatio[imageIndex[i]],Modes(modeIndex))
                     self.ChangeCombobox(compIndex[0])
             self.showImage(self.outputData[outputIndex],self.OutputImages[outputIndex],outputIndex)
+     
 
     def ChangeCombobox(self,choosenIndex):
         if choosenIndex in (0, 4):
@@ -96,7 +97,6 @@ class MyWindow(QtWidgets.QMainWindow):
         for i,j in itertools.product(visibleElements,hiddenElements):
             self.ui.ComponentOutput2.model().item(i).setEnabled(True)
             self.ui.ComponentOutput2.model().item(j).setEnabled(False)
-
 
 if __name__ == '__main__':
     import sys
