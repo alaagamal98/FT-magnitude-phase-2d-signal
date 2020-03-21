@@ -1,9 +1,9 @@
+import cv2 as cv
 from PyQt5 import QtWidgets,QtCore,QtGui
 from mainwindow import Ui_MainWindow
-import cv2 as cv
 from imageModel import ImageModel
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QImage
+from modesEnum import Modes
+import itertools
 
 class MyWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -12,77 +12,91 @@ class MyWindow(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.ui.Upload.triggered.connect(self.getFile)
-        self.imageData=[None]*2
+        self.inputData=[None]*2
+        self.outputData=[None]*2
         self.inputImages = [self.ui.InputImage1,self.ui.InputImage2]
         self.FTImages = [self.ui.FT_Image1,self.ui.FT_Image2]
         self.OutputImages = [self.ui.OutputImage1,self.ui.OutputImage2]
         self.ComponentComboBoxs = [self.ui.ComponentInput1,self.ui.ComponentInput2]
-        self.ui.ComponentInput1.activated.connect(lambda: self.chooseComp(0))
-        for i in range (len(self.ComponentComboBoxs)):
-            self.ComponentComboBoxs[i].activated.connect(lambda: self.chooseComp(i))
+        self.Sliders = [self.ui.MixingRatio1,self.ui.MixingRatio2]
+        self.realTime()
+
+    def realTime(self):
+        for i in range(len(self.Sliders)):
+            self.Sliders[i].valueChanged.connect(self.Output)
+        self.ComponentComboBoxs[0].activated.connect(lambda: self.chooseComp(0))
+        self.ComponentComboBoxs[1].activated.connect(lambda: self.chooseComp(1))
+        self.ui.ChooseOutput.activated.connect(self.Output)
+        self.ui.ComponentOutput1.activated.connect(self.Output)
+        self.ui.ComponentOutput2.activated.connect(self.Output)
+        self.ui.ChooseImage1.activated.connect(self.Output)
+        self.ui.ChooseImage2.activated.connect(self.Output)
 
     def getFile(self):
         options =  QtWidgets.QFileDialog.Options()
         imgPath = QtWidgets.QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "", "(*.jpg) ;;(*png) ;; (*jpeg) ", options=options) 
         if(imgPath[0]!=''):
             if (self.inputImages[0].pixmap()==None):
-                self.imageData[0] = ImageModel(imgPath[0])  
-                self.showImage(self.imageData[0].imgByte,0)
+                self.inputData[0] = ImageModel(imgPath[0])  
+                self.showImage(self.inputData[0].imgByte,self.inputImages[0],0)
+                self.imageSize = self.inputData[0].imgByte.shape
             elif (self.inputImages[1].pixmap()==None):
-                self.imageData[1] = ImageModel(imgPath[0])  
-                self.showImage(self.imageData[1].imgByte,1)               
-            else:
-                pass
-        else:
-            pass 
-
-    def showImage(self,image,index):
-        cv.imwrite("image.jpeg", image) 
-        pixmap = QtGui.QPixmap('image.jpeg')
-        self.inputImages[index].setPixmap(pixmap)
-        self.inputImages[index].setScaledContents(True)
-        self.inputImages[index].setSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
-        self.FTImages[index].setSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
-        self.OutputImages[0].setSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Expanding)
-        self.OutputImages[1].setSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Expanding)
-
-
-
-       
-
-    # def showInput(self,image,index):
-    #     image = QImage(image.data, image.shape[1], image.shape[0], QImage.Format_Grayscale8)
-    #     self.inputImages[index].setPixmap(QtGui.QPixmap.fromImage(image))
-    #     self.inputImages[index].setScaledContents(True)
-    #     self.inputImages[index].setSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
-    #     self.FTImages[index].setSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
-    #     self.OutputImages[index].setSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Expanding)
-
-    def displayFFT(self,component,index):
-        cv.imwrite("fft.jpeg", component) 
-        pixmap = QtGui.QPixmap('fft.jpeg')
-        self.FTImages[index].setPixmap(pixmap)
-        self.FTImages[index].setScaledContents(True)
-
-
-    # def displayFFT(self,component,index):
-    #     image = QImage(component.data, component.shape[1], component.shape[0], QImage.Format_Grayscale8)
-    #     self.FTImages[index].setPixmap(QtGui.QPixmap.fromImage(image))
-    #     self.FTImages[index].setScaledContents(True)
+                self.inputData[1] = ImageModel(imgPath[0])
+                if(self.inputData[1].imgByte.shape == self.imageSize):  
+                    self.showImage(self.inputData[1].imgByte,self.inputImages[1],1)     
+   
+    def showImage(self,image,component,index):
+        cv.imwrite("results/edit.jpg", image) 
+        pixmap = QtGui.QPixmap('results/edit.jpg')
+        component.setPixmap(pixmap)
+        component.setScaledContents(True)
 
     def chooseComp(self,index):
-        if(self.imageData[index]):
+        if(self.inputData[index]):
             if (str(self.ComponentComboBoxs[index].currentText())=="FT Magnitude"):
-                self.displayFFT(self.imageData[index].magnitude,index)
+                self.showImage(self.inputData[index].magnitude,self.FTImages[index],index)
             elif (str(self.ComponentComboBoxs[index].currentText())=="FT Phase"):
-                self.displayFFT(self.imageData[index].phase,index)
+                self.showImage(self.inputData[index].phase,self.FTImages[index],index)
             elif (str(self.ComponentComboBoxs[index].currentText())=="FT Real component"):
-                self.displayFFT(self.imageData[index].real,index)
+                self.showImage(self.inputData[index].real,self.FTImages[index],index)
             elif (str(self.ComponentComboBoxs[index].currentText())=="FT Imaginary component"):
-                self.displayFFT(self.imageData[index].imaginary,index)
+                self.showImage(self.inputData[index].imaginary,self.FTImages[index],index)
             else:
                 pass
 
+    def Output(self):
+        if(self.inputData[0] and self.inputData[1]):
+            outputIndex = self.ui.ChooseOutput.currentIndex()
+            imageIndex = [self.ui.ChooseImage1.currentIndex(),self.ui.ChooseImage2.currentIndex()]
+            mixingRatio = [self.ui.MixingRatio1.value()/100,self.ui.MixingRatio2.value()/100]
+            percentage = [self.ui.Percentage1,self.ui.Percentage2]
+            compIndex = [self.ui.ComponentOutput1.currentIndex(),self.ui.ComponentOutput2.currentIndex()]
+            uniMag = True if (compIndex[0] == 4 or compIndex[1] == 4) else False
+            uniPhase = True if (compIndex[0] == 5 or compIndex[1] == 5) else False
+            for i in range(len(imageIndex)):
+                percentage[i].setText(str(mixingRatio[i]*100)+"%")
+                modeIndex = 0 if compIndex[imageIndex[i]]== 0 or 1 or 4 or 5 else 1
+                if compIndex[imageIndex[i]] == 0 or 2 or 4:
+                    self.outputData[outputIndex]= self.inputData[imageIndex[i]].mix(self.inputData[abs(imageIndex[i]-1)],mixingRatio[imageIndex[i]],mixingRatio[abs(imageIndex[i]-1)],Modes(modeIndex),uniMag,uniPhase)
+                    self.ChangeCombobox(compIndex[imageIndex[i]],imageIndex[i])
+                else:
+                    self.outputData[outputIndex]= self.inputData[abs(imageIndex[i]-1)].mix(self.inputData[imageIndex[i]],mixingRatio[abs(imageIndex[i]-1)],mixingRatio[imageIndex[i]],Modes(modeIndex),uniMag,uniPhase)
+                    self.ChangeCombobox(compIndex[imageIndex[i]],imageIndex[i])
+            self.showImage(self.outputData[outputIndex],self.OutputImages[outputIndex],outputIndex)
+
+    def ChangeCombobox(self,choosenIndex,imageIndex):
+        components =[self.ui.ComponentOutput1,self.ui.ComponentOutput2]
+        if choosenIndex in (0, 4):
+            visibleElements,hiddenElements = [1,5],[0,2,3,4]
+        elif choosenIndex in (1,5):
+            visibleElements,hiddenElements = [0,4],[1,2,3,5]  
+        elif choosenIndex == 2:
+            visibleElements,hiddenElements = [3],[0,1,2,4,5]
+        else:
+            visibleElements,hiddenElements = [2], [0,1,3,4,5]
+        for i,j in itertools.product(visibleElements,hiddenElements):
+            components[abs(imageIndex-1)].model().item(i).setEnabled(True)
+            components[abs(imageIndex-1)].model().item(j).setEnabled(False)
 
 
 if __name__ == '__main__':

@@ -442,7 +442,7 @@
           <item>
            <widget class="QLabel" name="label_8">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -467,7 +467,7 @@
           <item>
            <widget class="QLabel" name="label_7">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -493,7 +493,7 @@
           <item>
            <widget class="QLabel" name="OutputImage1">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -515,7 +515,7 @@
           <item>
            <widget class="QLabel" name="OutputImage2">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -548,7 +548,7 @@
           <item>
            <widget class="QLabel" name="label_6">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -992,11 +992,6 @@
             </property>
             <item>
              <property name="text">
-              <string>Choose Component</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
               <string>FT Magnitude</string>
              </property>
             </item>
@@ -1024,7 +1019,7 @@
           <item>
            <widget class="QLabel" name="InputImage2">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -1046,7 +1041,7 @@
           <item>
            <widget class="QLabel" name="FT_Image2">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -1075,6 +1070,12 @@
          <layout class="QHBoxLayout" name="horizontalLayout_5">
           <item>
            <widget class="QLabel" name="label_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="font">
              <font>
               <family>Forte</family>
@@ -1508,11 +1509,6 @@
             </property>
             <item>
              <property name="text">
-              <string>Choose Output</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
               <string>Output1</string>
              </property>
             </item>
@@ -1531,6 +1527,12 @@
            <layout class="QHBoxLayout" name="horizontalLayout_7">
             <item>
              <widget class="QLabel" name="label_4">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="font">
                <font>
                 <family>Forte</family>
@@ -1964,11 +1966,6 @@
               </property>
               <item>
                <property name="text">
-                <string>Choose Image</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
                 <string>Image1</string>
                </property>
               </item>
@@ -1983,6 +1980,12 @@
              <layout class="QVBoxLayout" name="verticalLayout_3">
               <item alignment="Qt::AlignRight">
                <widget class="QLabel" name="Percentage1">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="font">
                  <font>
                   <family>Forte</family>
@@ -1994,7 +1997,7 @@
                 </property>
                </widget>
               </item>
-              <item alignment="Qt::AlignVCenter">
+              <item>
                <widget class="QSlider" name="MixingRatio1">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -2433,11 +2436,6 @@
             </property>
             <item>
              <property name="text">
-              <string>Choose Component</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
               <string>Magnitude</string>
              </property>
             </item>
@@ -2476,6 +2474,12 @@
            <layout class="QHBoxLayout" name="horizontalLayout_9">
             <item>
              <widget class="QLabel" name="label_5">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="font">
                <font>
                 <family>Forte</family>
@@ -2909,11 +2913,6 @@
               </property>
               <item>
                <property name="text">
-                <string>Choose Image</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
                 <string>Image1</string>
                </property>
               </item>
@@ -2928,6 +2927,12 @@
              <layout class="QVBoxLayout" name="verticalLayout_7">
               <item alignment="Qt::AlignRight">
                <widget class="QLabel" name="Percentage2">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="font">
                  <font>
                   <family>Forte</family>
@@ -3378,11 +3383,6 @@
             </property>
             <item>
              <property name="text">
-              <string>Choose Component</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
               <string>Magnitude</string>
              </property>
             </item>
@@ -3427,7 +3427,7 @@
           <item>
            <widget class="QLabel" name="label_9">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -3871,11 +3871,6 @@
             </property>
             <item>
              <property name="text">
-              <string>Choose Component</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
               <string>FT Magnitude</string>
              </property>
             </item>
@@ -3903,7 +3898,7 @@
           <item>
            <widget class="QLabel" name="InputImage1">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -3925,7 +3920,7 @@
           <item>
            <widget class="QLabel" name="FT_Image1">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -3948,8 +3943,8 @@
         </item>
        </layout>
       </item>
-      <item row="1" column="1">
-       <spacer name="verticalSpacer">
+      <item row="0" column="1">
+       <spacer name="verticalSpacer_2">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -3961,8 +3956,8 @@
         </property>
        </spacer>
       </item>
-      <item row="0" column="1">
-       <spacer name="verticalSpacer_2">
+      <item row="1" column="1">
+       <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -3984,7 +3979,7 @@
      <x>0</x>
      <y>0</y>
      <width>1209</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
