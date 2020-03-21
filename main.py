@@ -71,23 +71,20 @@ class MyWindow(QtWidgets.QMainWindow):
             mixingRatio = [self.ui.MixingRatio1.value()/100,self.ui.MixingRatio2.value()/100]
             percentage = [self.ui.Percentage1,self.ui.Percentage2]
             compIndex = [self.ui.ComponentOutput1.currentIndex(),self.ui.ComponentOutput2.currentIndex()]
-            uniMag = True if (compIndex[0] == 4 or compIndex[1] == 4) else False
-            uniPhase = True if (compIndex[0] == 5 or compIndex[1] == 5) else False
             for i in range(len(imageIndex)):
                 percentage[i].setText(str(mixingRatio[i]*100)+"%")
                 modeIndex = 0 if compIndex[imageIndex[i]] in (0,1,4,5) else 1                    
                 if compIndex[imageIndex[i]] in(0,2,4):
                     self.inputData[imageIndex[i]].uniMag = True if compIndex[imageIndex[i]] == 4 else False
                     self.outputData[outputIndex]= self.inputData[imageIndex[i]].mix(self.inputData[abs(imageIndex[i]-1)],mixingRatio[imageIndex[i]],mixingRatio[abs(imageIndex[i]-1)],Modes(modeIndex))
-                    self.ChangeCombobox(compIndex[imageIndex[i]],imageIndex[i])
+                    self.ChangeCombobox(compIndex[0])
                 else:
                     self.inputData[imageIndex[i]].uniPhase = True if compIndex[imageIndex[i]]==5 else False
                     self.outputData[outputIndex] = self.inputData[abs(imageIndex[i]-1)].mix(self.inputData[imageIndex[i]],mixingRatio[abs(imageIndex[i]-1)],mixingRatio[imageIndex[i]],Modes(modeIndex))
-                    self.ChangeCombobox(compIndex[imageIndex[i]],imageIndex[i])
+                    self.ChangeCombobox(compIndex[0])
             self.showImage(self.outputData[outputIndex],self.OutputImages[outputIndex],outputIndex)
 
-    def ChangeCombobox(self,choosenIndex,imageIndex):
-        components =[self.ui.ComponentOutput1,self.ui.ComponentOutput2]
+    def ChangeCombobox(self,choosenIndex):
         if choosenIndex in (0, 4):
             visibleElements,hiddenElements = [1,5],[0,2,3,4]
         elif choosenIndex in (1,5):
@@ -97,8 +94,8 @@ class MyWindow(QtWidgets.QMainWindow):
         else:
             visibleElements,hiddenElements = [2], [0,1,3,4,5]
         for i,j in itertools.product(visibleElements,hiddenElements):
-            components[abs(imageIndex-1)].model().item(i).setEnabled(True)
-            components[abs(imageIndex-1)].model().item(j).setEnabled(False)
+            self.ui.ComponentOutput2.model().item(i).setEnabled(True)
+            self.ui.ComponentOutput2.model().item(j).setEnabled(False)
 
 
 if __name__ == '__main__':
