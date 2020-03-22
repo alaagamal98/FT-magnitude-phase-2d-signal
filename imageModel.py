@@ -50,7 +50,7 @@ class ImageModel():
                 real,imaginary  = cv.polarToCart(self.magnitude*magnitudeOrRealRatio + imageToBeMixed.uniMagnitude*(1-magnitudeOrRealRatio),self.phase* (1-phaesOrImaginaryRatio)+imageToBeMixed.phase* phaesOrImaginaryRatio,angleInDegrees=  True )
             elif (imageToBeMixed.uniPh):
                 real,imaginary  = cv.polarToCart(self.magnitude*magnitudeOrRealRatio + imageToBeMixed.magnitude*(1-magnitudeOrRealRatio),self.phase* (1-phaesOrImaginaryRatio)+imageToBeMixed.uniPhase* phaesOrImaginaryRatio ,angleInDegrees=  True)
-            elif (self.uniMag== False and imageToBeMixed.uniPh== False and imageToBeMixed.uniMag== False and self.uniPh== False):
+            else:
                 real,imaginary  = cv.polarToCart(self.magnitude*magnitudeOrRealRatio + imageToBeMixed.magnitude*(1-magnitudeOrRealRatio),self.phase* (1-phaesOrImaginaryRatio)+imageToBeMixed.phase* phaesOrImaginaryRatio,angleInDegrees=  True )
         elif mode.value == "testRealAndImagMode":
             real = self.real*magnitudeOrRealRatio+imageToBeMixed.real*(1-magnitudeOrRealRatio)

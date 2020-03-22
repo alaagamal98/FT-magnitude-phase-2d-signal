@@ -5,11 +5,20 @@ from imageModel import ImageModel
 from modesEnum import Modes
 import itertools
 import numpy as np
+import logging
 
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+file_handler = logging.FileHandler('logfile.log')
+formatter = logging.Formatter('%(asctime)s :: %(levelname)s :: %(name)s :: Line No %(lineno)s ::  %(message)s')
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
 class MyWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(MyWindow, self).__init__()
     
+        self.configure_logging()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.ui.Upload.triggered.connect(self.getFile)
@@ -21,6 +30,9 @@ class MyWindow(QtWidgets.QMainWindow):
         self.ComponentComboBoxs = [self.ui.ComponentInput1,self.ui.ComponentInput2]
         self.Sliders = [self.ui.MixingRatio1,self.ui.MixingRatio2]
         self.realTime()
+
+    def configure_logging(self):
+        pass
 
     def realTime(self):
         for i in range(len(self.Sliders)):
@@ -39,18 +51,26 @@ class MyWindow(QtWidgets.QMainWindow):
         if(imgPath[0]!=''):
             if (self.inputImages[0].pixmap()==None):
                 self.inputData[0] = ImageModel(imgPath[0])  
+                logger.info('Uploaded The Image Successfully')
                 self.showImage(self.inputData[0].imgByte,self.inputImages[0],0)
                 self.imageSize = self.inputData[0].imgByte.shape
             elif (self.inputImages[1].pixmap()==None):
                 self.inputData[1] = ImageModel(imgPath[0])
-                if(self.inputData[1].imgByte.shape == self.imageSize):  
-                    self.showImage(self.inputData[1].imgByte,self.inputImages[1],1)     
+                if(self.inputData[1].imgByte.shape == self.imageSize): 
+                    logger.info('Uploaded The Image Successfully')
+                    self.showImage(self.inputData[1].imgByte,self.inputImages[1],1)    
+                else:
+                    logger.warning('Shape Of Image 2 Does Not Match Shape Of Image 1')
+
+ 
    
     def showImage(self,image,component,index):
         cv.imwrite("results/edit.jpg", np.float64(image)) 
         pixmap = QtGui.QPixmap('results/edit.jpg')
         component.setPixmap(pixmap)
         component.setScaledContents(True)
+        logger.info('Displayed The Image Successfully')
+
 
     def chooseComp(self,index):
         if(self.inputData[index]):
@@ -65,7 +85,9 @@ class MyWindow(QtWidgets.QMainWindow):
             else:
                 pass
 
+
     def Output(self):
+        logger.info('A Change Has Been Made In The Mixing Panel')
         if(self.inputData[0] and self.inputData[1]):
             outputIndex = self.ui.ChooseOutput.currentIndex()
             imageIndex = [self.ui.ChooseImage1.currentIndex(),self.ui.ChooseImage2.currentIndex()]
@@ -85,6 +107,8 @@ class MyWindow(QtWidgets.QMainWindow):
                     self.inputData[imageIndex[abs(i-1)]].uniPhase = True if compIndex[abs(i-1)] == 4 else False
                     self.outputData[outputIndex] = self.inputData[imageIndex[abs(i-1)]].mix(self.inputData[imageIndex[i]],mixingRatio[abs(i-1)],mixingRatio[i],Modes(modeIndex))
                     self.ChangeCombobox(compIndex[0])
+            logger.info('The Mixing Has Been Done Successfully')
+
             self.showImage(self.outputData[outputIndex],self.OutputImages[outputIndex],outputIndex)
      
 
@@ -92,7 +116,7 @@ class MyWindow(QtWidgets.QMainWindow):
         if choosenIndex in (0, 4):
             visibleElements,hiddenElements = [1,5],[0,2,3,4]
         elif choosenIndex in (1,5):
-            visibleElements,hiddenElements = [0,4],[1,2,3,5]  
+            visibleElements,hiddenElements = [0,4],[1,2,3,5] 
         elif choosenIndex == 2:
             visibleElements,hiddenElements = [3],[0,1,2,4,5]
         else:
@@ -100,6 +124,7 @@ class MyWindow(QtWidgets.QMainWindow):
         for i,j in itertools.product(visibleElements,hiddenElements):
             self.ui.ComponentOutput2.model().item(i).setEnabled(True)
             self.ui.ComponentOutput2.model().item(j).setEnabled(False)
+
 
 if __name__ == '__main__':
     import sys
