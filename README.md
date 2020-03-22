@@ -1,6 +1,8 @@
 ## Write your name and ID
-### Name:
-### ID: 
+### Name: Alaa Gamal Abdelaziz
+### Sec: 1
+### BN: 15
+
 
 # MagnitudePhaseMixerTemplate
 Starter Template for Magnitude Phase Mixer Task
