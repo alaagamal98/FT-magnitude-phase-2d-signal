@@ -3,21 +3,10 @@
 ### Sec: 1
 ### BN: 15
 
-
-# MagnitudePhaseMixerTemplate
-Starter Template for Magnitude Phase Mixer Task
-
-
-### install opencv to run the test file
-
-### Implement the ImageModel in imageModel.py and its mix function
-### run testTask.py --> python testTask.py
-### assign a valid path for image1Path and image2Path
-### Now when you run testTask you should get the following line
-### AssertionError: This is not a numpy array, check the return value of your implemented mix function
-
-### when you implement the mix function correctly you should get the following 2 lines
-### Modes.magnitudeAndPhase passed successfully
-### Modes.realAndImaginary passed successfully
-
-### Do not forget to update the dep.txt file
+## My GUI Screenshots:
+![Screen1](results/Screenshot1.png) 
+![Screen2](results/Screenshot2.png) 
+![Screen3](results/Screenshot3.png) 
+![Screen4](results/Screenshot4.png) 
+![Screen5](results/Screenshot5.png) 
+![Screen6](results/Screenshot6.png) 
