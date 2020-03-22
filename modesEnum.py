@@ -3,8 +3,8 @@
 import enum
 
 class Modes(enum.Enum):
-    magnitudeAndPhase = 0
-    realAndImaginary = 1
+    magnitudeAndPhase = "testMagAndPhaseMode"
+    realAndImaginary = "testRealAndImagMode"
 
 # How to use enum?
 # Just type enumName.enumElement

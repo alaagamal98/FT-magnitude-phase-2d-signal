@@ -4,6 +4,7 @@ from mainwindow import Ui_MainWindow
 from imageModel import ImageModel
 from modesEnum import Modes
 import itertools
+import numpy as np
 
 class MyWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -34,7 +35,7 @@ class MyWindow(QtWidgets.QMainWindow):
 
     def getFile(self):
         options =  QtWidgets.QFileDialog.Options()
-        imgPath = QtWidgets.QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "", "(*.jpg) ;;(*png) ;; (*jpeg) ", options=options) 
+        imgPath = QtWidgets.QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "", "(*.jpg) ;;(*png) ;; (*jpeg);; (*gif) ", options=options) 
         if(imgPath[0]!=''):
             if (self.inputImages[0].pixmap()==None):
                 self.inputData[0] = ImageModel(imgPath[0])  
@@ -46,7 +47,7 @@ class MyWindow(QtWidgets.QMainWindow):
                     self.showImage(self.inputData[1].imgByte,self.inputImages[1],1)     
    
     def showImage(self,image,component,index):
-        cv.imwrite("results/edit.jpg", image) 
+        cv.imwrite("results/edit.jpg", np.float64(image)) 
         pixmap = QtGui.QPixmap('results/edit.jpg')
         component.setPixmap(pixmap)
         component.setScaledContents(True)
@@ -73,14 +74,16 @@ class MyWindow(QtWidgets.QMainWindow):
             compIndex = [self.ui.ComponentOutput1.currentIndex(),self.ui.ComponentOutput2.currentIndex()]
             for i in range(len(imageIndex)):
                 percentage[i].setText(str(mixingRatio[i]*100)+"%")
-                modeIndex = 0 if compIndex[i] in (0,1,4,5) else 1                    
+                modeIndex = "testMagAndPhaseMode" if compIndex[i] in (0,1,4,5) else "testRealAndImagMode"                    
                 if compIndex[i] in(0,2,4):
                     self.inputData[imageIndex[i]].uniMag = True if compIndex[i] == 4 else False
-                    self.outputData[outputIndex]= self.inputData[imageIndex[i]].mix(self.inputData[abs(imageIndex[i]-1)],mixingRatio[imageIndex[i]],mixingRatio[abs(imageIndex[i]-1)],Modes(modeIndex))
+                    self.inputData[imageIndex[abs(i-1)]].uniMag = True if compIndex[abs(i-1)] == 4 else False
+                    self.outputData[outputIndex]= self.inputData[imageIndex[i]].mix(self.inputData[imageIndex[abs(i-1)]],mixingRatio[i],mixingRatio[abs(i-1)],Modes(modeIndex))
                     self.ChangeCombobox(compIndex[0])
                 else:
                     self.inputData[imageIndex[i]].uniPhase = True if compIndex[i]==5 else False
-                    self.outputData[outputIndex] = self.inputData[abs(imageIndex[i]-1)].mix(self.inputData[imageIndex[i]],mixingRatio[abs(imageIndex[i]-1)],mixingRatio[imageIndex[i]],Modes(modeIndex))
+                    self.inputData[imageIndex[abs(i-1)]].uniPhase = True if compIndex[abs(i-1)] == 4 else False
+                    self.outputData[outputIndex] = self.inputData[imageIndex[abs(i-1)]].mix(self.inputData[imageIndex[i]],mixingRatio[abs(i-1)],mixingRatio[i],Modes(modeIndex))
                     self.ChangeCombobox(compIndex[0])
             self.showImage(self.outputData[outputIndex],self.OutputImages[outputIndex],outputIndex)
      

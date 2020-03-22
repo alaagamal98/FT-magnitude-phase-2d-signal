@@ -20,16 +20,14 @@ class ImageModel():
         # ALL the following properties should be assigned correctly after reading imgPath 
         ###
         self.imgByte = cv.imread(imgPath,cv.IMREAD_GRAYSCALE)
-        self.dft = np.fft.fft(self.imgByte) 
-        self.real = self.dft.real
-        self.imaginary = self.dft.imag
-        # self.magnitude = np.abs(self.dft)
-        # self.phase= np.angle(self.dft)
-        self.magnitude , self.phase = cv.cartToPolar(self.real,self.imaginary)
-        self.uniMagnitude = np.where(self.magnitude>0.5,1,1)
-        self.uniPhase = self.phase*0
+        self.dft = cv.dft(np.float64(self.imgByte),flags = cv.DFT_COMPLEX_OUTPUT)
+        self.real= self.dft[:,:,0]
+        self.imaginary = self.dft[:,:,1]
+        self.magnitude , self.phase = cv.cartToPolar(self.real,self.imaginary,angleInDegrees= True)
+        self.uniMagnitude = np.ones(self.magnitude.shape)
+        self.uniPhase = np.zeros(self.phase.shape)
         self.uniMag = False
-        self.uniPhase = False
+        self.uniPh = False
 
     def mix(self, imageToBeMixed: 'ImageModel', magnitudeOrRealRatio: float, phaesOrImaginaryRatio: float, mode: 'Modes') -> np.ndarray:
         """
@@ -38,16 +36,25 @@ class ImageModel():
         ### 
         # implement this function
         ###
-        if mode.value == 0:
-            if (self.uniMag&self.uniPhase):
-                mix = np.multiply((self.uniMagnitude*magnitudeOrRealRatio + imageToBeMixed.magnitude*(1-magnitudeOrRealRatio)),np.exp(self.phase*(1-phaesOrImaginaryRatio)+imageToBeMixed.uniPhase*phaesOrImaginaryRatio))
+        mix = np.zeros((self.imgByte.shape[0],self.imgByte.shape[1],2),'float64')
+        if mode.value == "testMagAndPhaseMode":
+            if (self.uniMag and imageToBeMixed.uniPh):
+                real,imaginary = cv.polarToCart(self.uniMagnitude*magnitudeOrRealRatio + imageToBeMixed.magnitude*(1-magnitudeOrRealRatio),self.phase* (1-phaesOrImaginaryRatio)+imageToBeMixed.uniPhase* phaesOrImaginaryRatio,angleInDegrees=  True )
+            elif (imageToBeMixed.uniMag and self.uniPh):
+                real,imaginary = cv.polarToCart(self.magnitude*magnitudeOrRealRatio + imageToBeMixed.uniMagnitude*(1-magnitudeOrRealRatio),self.uniPhase* (1-phaesOrImaginaryRatio)+imageToBeMixed.phase* phaesOrImaginaryRatio,angleInDegrees=  True )
             elif (self.uniMag):
-                mix = np.multiply((self.uniMagnitude*magnitudeOrRealRatio + imageToBeMixed.magnitude*(1-magnitudeOrRealRatio)),np.exp(self.phase*(1-phaesOrImaginaryRatio)+imageToBeMixed.phase*phaesOrImaginaryRatio))
-            elif (self.uniPhase):
-                mix = np.multiply((self.magnitude*magnitudeOrRealRatio + imageToBeMixed.magnitude*(1-magnitudeOrRealRatio)),np.exp(self.phase*(1-phaesOrImaginaryRatio)+imageToBeMixed.uniPhase*phaesOrImaginaryRatio))
-            else:
-                mix = np.multiply((self.magnitude*magnitudeOrRealRatio + imageToBeMixed.magnitude*(1-magnitudeOrRealRatio)),np.exp(self.phase*(1-phaesOrImaginaryRatio)+imageToBeMixed.phase*phaesOrImaginaryRatio))
-        elif mode.value == 1:
-            mix =(self.real*magnitudeOrRealRatio+imageToBeMixed.real*(1-magnitudeOrRealRatio))+ 1j*(self.imaginary*(1-phaesOrImaginaryRatio)+imageToBeMixed.imaginary*phaesOrImaginaryRatio)
-        invImg = np.real(np.fft.ifft(mix))
+                real,imaginary  = cv.polarToCart(self.uniMagnitude*magnitudeOrRealRatio + imageToBeMixed.magnitude*(1-magnitudeOrRealRatio),self.phase* (1-phaesOrImaginaryRatio)+imageToBeMixed.phase* phaesOrImaginaryRatio,angleInDegrees=  True )
+            elif (self.uniPh):
+                real,imaginary  = cv.polarToCart(self.magnitude*magnitudeOrRealRatio + imageToBeMixed.magnitude*(1-magnitudeOrRealRatio),self.uniPhase* (1-phaesOrImaginaryRatio)+imageToBeMixed.phase* phaesOrImaginaryRatio ,angleInDegrees=  True)
+            elif (imageToBeMixed.uniMag):
+                real,imaginary  = cv.polarToCart(self.magnitude*magnitudeOrRealRatio + imageToBeMixed.uniMagnitude*(1-magnitudeOrRealRatio),self.phase* (1-phaesOrImaginaryRatio)+imageToBeMixed.phase* phaesOrImaginaryRatio,angleInDegrees=  True )
+            elif (imageToBeMixed.uniPh):
+                real,imaginary  = cv.polarToCart(self.magnitude*magnitudeOrRealRatio + imageToBeMixed.magnitude*(1-magnitudeOrRealRatio),self.phase* (1-phaesOrImaginaryRatio)+imageToBeMixed.uniPhase* phaesOrImaginaryRatio ,angleInDegrees=  True)
+            elif (self.uniMag== False and imageToBeMixed.uniPh== False and imageToBeMixed.uniMag== False and self.uniPh== False):
+                real,imaginary  = cv.polarToCart(self.magnitude*magnitudeOrRealRatio + imageToBeMixed.magnitude*(1-magnitudeOrRealRatio),self.phase* (1-phaesOrImaginaryRatio)+imageToBeMixed.phase* phaesOrImaginaryRatio,angleInDegrees=  True )
+        elif mode.value == "testRealAndImagMode":
+            real = self.real*magnitudeOrRealRatio+imageToBeMixed.real*(1-magnitudeOrRealRatio)
+            imaginary = self.imaginary* (1-phaesOrImaginaryRatio)+imageToBeMixed.imaginary* phaesOrImaginaryRatio
+        mix[:,:,0] , mix[:,:,1] =  real, imaginary
+        invImg = cv.idft(mix,flags=cv.DFT_SCALE | cv.DFT_REAL_OUTPUT)
         return invImg
