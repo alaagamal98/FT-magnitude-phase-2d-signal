@@ -17,7 +17,7 @@ class ImageModel():
     def __init__(self, imgPath: str):
         self.imgPath = imgPath
         ###
-        # ALL the following properties should be assigned correctly after reading imgPath 
+        # ALL the following properties should be assigned correctly after reading imgPath  
         ###
         self.imgByte = cv.imread(imgPath,cv.IMREAD_GRAYSCALE)
         self.dft = cv.dft(np.float64(self.imgByte),flags = cv.DFT_COMPLEX_OUTPUT)
