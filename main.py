@@ -7,7 +7,6 @@ import itertools
 import numpy as np
 import logging
 
-
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 file_handler = logging.FileHandler('logfile.log')
@@ -30,9 +29,6 @@ class MyWindow(QtWidgets.QMainWindow):
         self.ComponentComboBoxs = [self.ui.ComponentInput1,self.ui.ComponentInput2]
         self.Sliders = [self.ui.MixingRatio1,self.ui.MixingRatio2]
         self.realTime()
-
-    def configure_logging(self):
-        pass
 
     def realTime(self):
         for i in range(len(self.Sliders)):
@@ -62,15 +58,12 @@ class MyWindow(QtWidgets.QMainWindow):
                 else:
                     logger.warning('Shape Of Image 2 Does Not Match Shape Of Image 1')
 
- 
-   
     def showImage(self,image,component,index):
         cv.imwrite("results/edit.jpg", np.float64(image)) 
         pixmap = QtGui.QPixmap('results/edit.jpg')
         component.setPixmap(pixmap)
         component.setScaledContents(True)
         logger.info('Displayed The Image Successfully')
-
 
     def chooseComp(self,index):
         if(self.inputData[index]):
@@ -84,7 +77,6 @@ class MyWindow(QtWidgets.QMainWindow):
                 self.showImage(self.inputData[index].imaginary,self.FTImages[index],index)
             else:
                 pass
-
 
     def Output(self):
         logger.info('A Change Has Been Made In The Mixing Panel')
@@ -110,7 +102,6 @@ class MyWindow(QtWidgets.QMainWindow):
             logger.info('The Mixing Has Been Done Successfully')
 
             self.showImage(self.outputData[outputIndex],self.OutputImages[outputIndex],outputIndex)
-     
 
     def ChangeCombobox(self,choosenIndex):
         if choosenIndex in (0, 4):
@@ -124,7 +115,6 @@ class MyWindow(QtWidgets.QMainWindow):
         for i,j in itertools.product(visibleElements,hiddenElements):
             self.ui.ComponentOutput2.model().item(i).setEnabled(True)
             self.ui.ComponentOutput2.model().item(j).setEnabled(False)
-
 
 if __name__ == '__main__':
     import sys
