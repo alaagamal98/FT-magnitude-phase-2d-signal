@@ -74,8 +74,6 @@ class MyWindow(QtWidgets.QMainWindow):
                 self.showImage(self.inputData[index].real,self.FTImages[index],index)
             elif (str(self.ComponentComboBoxs[index].currentText())=="FT Imaginary component"):
                 self.showImage(self.inputData[index].imaginary,self.FTImages[index],index)
-            else:
-                pass
 
     def Output(self):
         logger.info('A Change Has Been Made In The Mixing Panel')
@@ -99,7 +97,6 @@ class MyWindow(QtWidgets.QMainWindow):
                     self.outputData[outputIndex] = self.inputData[imageIndex[abs(i-1)]].mix(self.inputData[imageIndex[i]],mixingRatio[abs(i-1)],mixingRatio[i],Modes(modeIndex))
                     self.ChangeCombobox(compIndex[0])
             logger.info('The Mixing Has Been Done Successfully')
-
             self.showImage(self.outputData[outputIndex],self.OutputImages[outputIndex],outputIndex)
 
     def ChangeCombobox(self,choosenIndex):
