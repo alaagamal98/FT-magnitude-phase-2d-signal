@@ -6,7 +6,7 @@ class Modes(enum.Enum):
     magnitudeAndPhase = "testMagAndPhaseMode"
     realAndImaginary = "testRealAndImagMode"
 
-# How to use enum?
+# How to use enum? 
 # Just type enumName.enumElement
 # for example enum.magnitudeAndPhase or enum.realAndImaginary
 
