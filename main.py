@@ -1,8 +1,8 @@
-import cv2 as cv
-from PyQt5 import QtWidgets,QtCore,QtGui
+from PyQt5 import QtWidgets,QtGui
 from mainwindow import Ui_MainWindow
 from imageModel import ImageModel
 from modesEnum import Modes
+import cv2 as cv
 import itertools
 import numpy as np
 import logging

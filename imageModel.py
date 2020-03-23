@@ -1,8 +1,6 @@
 ## This is the abstract class that the students should implement  
 import numpy as np
 import cv2 as cv
-import math
-import cmath 
 from modesEnum import Modes
 
 class ImageModel():
