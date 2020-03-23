@@ -20,5 +20,5 @@ image2Path : str = "results/test2.jpg"
 # type annotations can help you not to do this terrible mistake
 
 test = Task3Test(image1Path, image2Path, ImageModel)
-test.testRealAndImagMode(0.7, 0.3)
 test.testMagAndPhaseMode(0.7, 0.3)
+test.testRealAndImagMode(0.7, 0.3)
