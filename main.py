@@ -46,13 +46,13 @@ class MyWindow(QtWidgets.QMainWindow):
         if(imgPath[0]!=''):
             if (self.inputImages[0].pixmap()==None):
                 self.inputData[0] = ImageModel(imgPath[0])  
-                logger.info('Uploaded The Image Successfully.')
+                logger.info('Uploaded The Image With The Path {path} Successfully.'.format(path=imgPath[0]))
                 self.showImage(self.inputData[0].imgByte,self.inputImages[0],0)
                 self.imageSize = self.inputData[0].imgByte.shape
             elif (self.inputImages[1].pixmap()==None):
                 self.inputData[1] = ImageModel(imgPath[0])
                 if(self.inputData[1].imgByte.shape == self.imageSize): 
-                    logger.info('Uploaded The Image Successfully.')
+                    logger.info('Uploaded The Image With The Path {path} Successfully.'.format(path=imgPath[0]))
                     self.showImage(self.inputData[1].imgByte,self.inputImages[1],1)    
                 else:
                     logger.warning('Shape Of Image 2 Does Not Match Shape Of Image 1.')
