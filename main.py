@@ -17,7 +17,6 @@ class MyWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super(MyWindow, self).__init__()
     
-        self.configure_logging()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.ui.Upload.triggered.connect(self.getFile)
@@ -113,8 +112,8 @@ class MyWindow(QtWidgets.QMainWindow):
         else:
             visibleElements,hiddenElements = [2], [0,1,3,4,5]
         for i,j in itertools.product(visibleElements,hiddenElements):
-            self.ui.ComponentOutput2.model().item(i).setEnabled(True)
-            self.ui.ComponentOutput2.model().item(j).setEnabled(False)
+            self.ui.ComponentOutput2.view().setRowHidden(i,False)
+            self.ui.ComponentOutput2.view().setRowHidden(j,True)
 
 if __name__ == '__main__':
     import sys
