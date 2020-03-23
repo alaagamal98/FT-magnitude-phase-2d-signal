@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\mainwindow.ui'
+# Form implementation generated from reading ui file 'mainwindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.9.2
 #
@@ -1476,10 +1476,10 @@ class Ui_MainWindow(object):
         self.label_8.setText(_translate("MainWindow", "Output 1"))
         self.label_7.setText(_translate("MainWindow", "Output 2"))
         self.label_6.setText(_translate("MainWindow", "Image 2"))
-        self.ComponentInput2.setItemText(0, _translate("MainWindow", "FT Magnitude"))
-        self.ComponentInput2.setItemText(1, _translate("MainWindow", "FT Phase"))
-        self.ComponentInput2.setItemText(2, _translate("MainWindow", "FT Real component"))
-        self.ComponentInput2.setItemText(3, _translate("MainWindow", "FT Imaginary component"))
+        self.ComponentInput2.setItemText(0, _translate("MainWindow", "FT Magnitude Component"))
+        self.ComponentInput2.setItemText(1, _translate("MainWindow", "FT Phase Component"))
+        self.ComponentInput2.setItemText(2, _translate("MainWindow", "FT Real Component"))
+        self.ComponentInput2.setItemText(3, _translate("MainWindow", "FT Imaginary Component"))
         self.label_2.setText(_translate("MainWindow", "Mixer Output to:"))
         self.ChooseOutput.setItemText(0, _translate("MainWindow", "Output1"))
         self.ChooseOutput.setItemText(1, _translate("MainWindow", "Output2"))
@@ -1504,10 +1504,10 @@ class Ui_MainWindow(object):
         self.ComponentOutput2.setItemText(4, _translate("MainWindow", "Uniform Magnitude"))
         self.ComponentOutput2.setItemText(5, _translate("MainWindow", "Uniform Phase"))
         self.label_9.setText(_translate("MainWindow", "Image 1"))
-        self.ComponentInput1.setItemText(0, _translate("MainWindow", "FT Magnitude"))
-        self.ComponentInput1.setItemText(1, _translate("MainWindow", "FT Phase"))
-        self.ComponentInput1.setItemText(2, _translate("MainWindow", "FT Real component"))
-        self.ComponentInput1.setItemText(3, _translate("MainWindow", "FT Imaginary component"))
+        self.ComponentInput1.setItemText(0, _translate("MainWindow", "FT Magnitude Component"))
+        self.ComponentInput1.setItemText(1, _translate("MainWindow", "FT Phase Component"))
+        self.ComponentInput1.setItemText(2, _translate("MainWindow", "FT Real Component"))
+        self.ComponentInput1.setItemText(3, _translate("MainWindow", "FT Imaginary Component"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.Upload.setText(_translate("MainWindow", "Upload"))
 
