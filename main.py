@@ -91,12 +91,10 @@ class MyWindow(QtWidgets.QMainWindow):
                 modeIndex = "testMagAndPhaseMode" if compIndex[i] in (0,1,4,5) else "testRealAndImagMode"                    
                 if compIndex[i] in(0,2,4):
                     self.inputData[imageIndex[i]].uniMag = True if compIndex[i] == 4 else False
-                    self.inputData[imageIndex[abs(i-1)]].uniMag = True if compIndex[abs(i-1)] == 4 else False
                     self.outputData[outputIndex]= self.inputData[imageIndex[i]].mix(self.inputData[imageIndex[abs(i-1)]],mixingRatio[i],mixingRatio[abs(i-1)],Modes(modeIndex))
                     self.ChangeCombobox(compIndex[0])
                 else:
-                    self.inputData[imageIndex[i]].uniPhase = True if compIndex[i]==5 else False
-                    self.inputData[imageIndex[abs(i-1)]].uniPhase = True if compIndex[abs(i-1)] == 4 else False
+                    self.inputData[imageIndex[i]].uniPh = True if compIndex[i] == 5 else False
                     self.outputData[outputIndex] = self.inputData[imageIndex[abs(i-1)]].mix(self.inputData[imageIndex[i]],mixingRatio[abs(i-1)],mixingRatio[i],Modes(modeIndex))
                     self.ChangeCombobox(compIndex[0])
             logger.info('The Mixing Has Been Done Successfully')
