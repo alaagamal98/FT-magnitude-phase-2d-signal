@@ -10,7 +10,6 @@
 
 ![TestScreen](results/Screenshot.png)
 
-*The first error occurred with the files inside the Linux folder, and the second occurred when i put them in the same folder as testTask.py*
 
 ## My GUI Screenshots:
 ![Screen1](results/Screenshot1.png) 
