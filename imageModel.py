@@ -49,4 +49,5 @@ class ImageModel():
             imaginary = self.imaginary* (1-phaesOrImaginaryRatio)+imageToBeMixed.imaginary* phaesOrImaginaryRatio
         mix[:,:,0] , mix[:,:,1] =  real, imaginary
         invImg = cv.idft(mix,flags=cv.DFT_SCALE | cv.DFT_REAL_OUTPUT)
+        invImg *= 255.0/np.max(invImg)
         return invImg
